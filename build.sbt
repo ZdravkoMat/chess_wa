@@ -12,7 +12,6 @@ libraryDependencies += "com.google.inject" % "guice" % "7.0.0"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "7.0.0"
 
 
-
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "htwg.se.controllers._"
 
