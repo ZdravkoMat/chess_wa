@@ -1,5 +1,19 @@
-@()
+@(chessboard: String)
 
-@main("Welcome to Play") {
-  <h1>Welcome to Chess in Webapplication!</h1>
+@main("Chessboard") {
+<table class="chessboard">
+  @for(row <- chessboard.squares) {
+  <tr>
+    @for(square <- row) {
+    <td>
+      @if(square.occupied) {
+      <div class="piece @square.piece.pieceType"></div>
+      } else {
+      <div class="square"></div>
+      }
+    </td>
+    }
+  </tr>
+  }
+</table>
 }
