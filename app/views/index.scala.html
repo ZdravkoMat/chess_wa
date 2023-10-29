@@ -1,15 +1,15 @@
 @(chessboard: String)
 
 @main("Chessboard") {
-<table class="chessboard">
+<table>
   @for(row <- chessboard.squares) {
   <tr>
     @for(square <- row) {
     <td>
       @if(square.occupied) {
-      <div class="piece @square.piece.pieceType"></div>
+      <div></div> <!-- Figur -->
       } else {
-      <div class="square"></div>
+      <div></div> <!-- Square -->
       }
     </td>
     }
