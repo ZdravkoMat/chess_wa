@@ -3,9 +3,8 @@
 @main("Chessboard") {
 <div class="container">
     <div class="board">
-
 			@for(squareStr <- squareStrList) {
-				<div>@squareStr</div>
+				<div class="square"><p>@squareStr</p></div>
 			}
     </div>
     <div class="moveForm">
