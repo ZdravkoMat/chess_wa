@@ -24,7 +24,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   controller.add(this)
 
   def home = Action {
-    Ok(views.html.index("hello"))
+    Ok(views.html.home())
   }
 
   def newGame = Action {
