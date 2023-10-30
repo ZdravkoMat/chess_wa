@@ -1,19 +1,15 @@
-@(chessboard: String)
+@(board: htwg.se.chess.model.boardComponent.Board)
 
 @main("Chessboard") {
-<table>
-  @for(row <- chessboard.squares) {
-  <tr>
-    @for(square <- row) {
-    <td>
-      @if(square.occupied) {
-      <div></div> <!-- Figur -->
-      } else {
-      <div></div> <!-- Square -->
-      }
-    </td>
-    }
-  </tr>
-  }
-</table>
+    @board
+    <table>
+        @for(row <- 1 to 8) {
+            <tr>
+                @for(col <- 1 to 8) {
+                    <td>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
 }

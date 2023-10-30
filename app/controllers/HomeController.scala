@@ -3,7 +3,8 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
-import htwg.se.chess.model.BoardComponent.boardBaseImpl.Board
+import htwg.se.chess.model.boardComponent.Board
+import htwg.se.chess.controller.Controller
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -12,11 +13,9 @@ import htwg.se.chess.model.BoardComponent.boardBaseImpl.Board
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
+  def chessAsText = Board().startPos()
 
-  val initBoard: Board = Board.apply()
-
-  def displayChessboard = Action {
-    val newChessboard: Board = initBoard.startPos()
-    Ok(views.html.index(newChessboard.toString()))
+  def displayChessboard = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.index(chessAsText))
   }
 }
