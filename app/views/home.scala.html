@@ -1,6 +1,23 @@
 @()
 
-@main("Chessboard") {
-	<p>Welcome to Chess in Webapplication</p>
-    <button onclick="window.location.href='/play/new'">Start Game</button>
+@main("Welcome to Chess") {
+    <div class="container">
+        <div class="title">
+            <p>Welcome to Chess in Webapplication</p>
+        </div>
+        <div class="main">
+            <button onclick="window.location.href='/play/new'">Start Game</button>
+        </div>
+        <div class="rules-section">
+            <h2>Chess Rules</h2>
+            <p>Chess is a two-player strategy board game played on an 8x8 grid. Here are some basic rules:</p>
+            <ul>
+                <li>Each player has 16 pieces, including one king, one queen, two rooks, two knights, two bishops, and eight pawns.</li>
+                <li>The objective is to checkmate your opponent's king, meaning the king is in a position to be captured (in check) and cannot escape capture (mate).</li>
+                <li>Pieces have specific movement rules: for example, pawns move forward one square but capture diagonally, rooks move horizontally or vertically, knights have an L-shaped move, etc.</li>
+                <li>The game ends in a draw under various conditions, including a stalemate or insufficient material for checkmate.</li>
+            </ul>
+            <p>For more detailed rules and strategies, you can explore chess tutorials and books.</p>
+        </div>
+    </div>
 }

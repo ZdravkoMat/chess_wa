@@ -37,6 +37,11 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.index(controller.toString))
   }
 
+  def undo() = Action {
+    controller.doAndPublish(controller.undo)
+    Ok(views.html.index(controller.toString))
+  }
+
   def update(e: Event): Unit = e match {
     case Event.Quit =>
     case Event.Move =>
