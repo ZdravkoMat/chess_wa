@@ -1,18 +1,21 @@
-@(board_str: String)
+@(squareStrList: List[String])
 
 @main("Chessboard") {
 <div class="container">
     <div class="board">
-        <p>@{board_str}</p>
+
+			@for(squareStr <- squareStrList) {
+				<div>@squareStr</div>
+			}
     </div>
     <div class="moveForm">
         <form id="myForm">
             <label for="from">From:</label>
             <input type="text" id="from" name="from" required><br><br>
-        
+
             <label for="to">To:</label>
             <input type="text" id="to" name="to" required><br><br>
-        
+
             <button type="button" id="submitButton">Make Move</button>
         </form>
     </div>
@@ -25,7 +28,7 @@
 </div>
 
 
-    
+
 <script>
     var form = document.getElementById("myForm");
     var button = document.getElementById("submitButton");
@@ -33,9 +36,9 @@
     button.addEventListener("click", function() {
         var fromValue = document.getElementById("from").value;
         var toValue = document.getElementById("to").value;
-        
+
         var url = "/play/move/" + fromValue + "/" + toValue;
-            
+
         window.location.href = url;
     });
 </script>
