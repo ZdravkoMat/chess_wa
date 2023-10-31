@@ -1,4 +1,4 @@
-@(squareData: List[(String, String)])
+@(squareData: List[(String, String, String)])
 
 @main("Chess") {
 <div class="container">
@@ -6,9 +6,8 @@
         <div class="col-1"></div>
         <div class="col-8">
             <div class="board">
-                @for((squareStr, squareColor) <- squareData) {
-
-									<div class="square square_@squareColor"><p>@squareStr</p></div>
+                @for((squareCoord, squareStr, squareColor) <- squareData) {
+									<div id="@squareCoord" class="square square_@squareColor"><p>@squareStr</p></div>
                 }
             </div>
         </div>
