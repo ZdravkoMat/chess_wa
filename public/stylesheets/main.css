@@ -15,6 +15,14 @@
 	justify-content:center;
 }
 
+.square_white {
+	background: cornsilk;
+}
+
+.square_black {
+	background: brown;
+}
+
 .square p {
 	font-size: 50px;
 	margin: 0;

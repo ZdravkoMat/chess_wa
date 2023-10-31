@@ -29,22 +29,22 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def newGame = Action {
     controller.doAndPublish(controller.newGame)
-    Ok(views.html.game(controller.squareStrList()))
+    Ok(views.html.game(controller.squareData()))
   }
 
   def move(from: String, to: String) = Action {
     controller.doAndPublish(controller.makeMove, Move(from, to))
-    Ok(views.html.game(controller.squareStrList()))
+    Ok(views.html.game(controller.squareData()))
   }
 
   def undo() = Action {
     controller.doAndPublish(controller.undo)
-    Ok(views.html.game(controller.squareStrList()))
+    Ok(views.html.game(controller.squareData()))
   }
 
   def redo() = Action {
     controller.doAndPublish(controller.redo)
-    Ok(views.html.game(controller.squareStrList()))
+    Ok(views.html.game(controller.squareData()))
   }
 
   def update(e: Event): Unit = e match {

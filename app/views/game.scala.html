@@ -1,4 +1,4 @@
-@(squareStrList: List[String])
+@(squareData: List[(String, String)])
 
 @main("Chess") {
 <div class="container">
@@ -6,8 +6,9 @@
         <div class="col-1"></div>
         <div class="col-8">
             <div class="board">
-                @for(squareStr <- squareStrList) {
-                    <div class="square"><p>@squareStr</p></div>
+                @for((squareStr, squareColor) <- squareData) {
+
+									<div class="square square_@squareColor"><p>@squareStr</p></div>
                 }
             </div>
         </div>
@@ -16,10 +17,10 @@
                 <form id="myForm">
                     <label for="from">From:</label>
                     <input type="text" id="from" name="from" required><br><br>
-        
+
                     <label for="to">To:</label>
                     <input type="text" id="to" name="to" required><br><br>
-        
+
                     <button type="button" id="submitButton">Make Move</button>
                 </form>
             </div>
