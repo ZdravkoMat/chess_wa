@@ -5,6 +5,7 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.home
+GET     /rules                      controllers.HomeController.rules
 
 GET     /play/new					controllers.HomeController.newGame
 GET     /play/move/:from/:to		controllers.HomeController.move(from: String, to: String)

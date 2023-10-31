@@ -27,6 +27,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.home())
   }
 
+  def rules = Action {
+    Ok(views.html.rules())
+  }
+
   def newGame = Action {
     controller.doAndPublish(controller.newGame)
     Ok(views.html.game(controller.squareStrList()))
