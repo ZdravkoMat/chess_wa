@@ -1,15 +1,26 @@
 
 .board {
 	display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto;
-	height: 700px;
-	width: 700px;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
 	grid-auto-rows: 1fr;
 	grid-auto-columns: 1fr;
 }
 
+.board::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.board > *:first-child{
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
 .square {
-  border: 1px solid;
 	display: flex;
 	align-items:center;
 	justify-content:center;
@@ -24,6 +35,7 @@
 }
 
 .square p {
-	font-size: 50px;
+	font-size: 3.5vw;
 	margin: 0;
+	font-family: Arial;
 }
