@@ -1,23 +1,51 @@
 @()
 
 @main("Welcome to Chess") {
-    <div class="container">
-        <div class="title">
-            <p>Welcome to Chess in Webapplication</p>
-        </div>
-        <div class="main">
-            <button onclick="window.location.href='/play/new'">Start Game</button>
-        </div>
-        <div class="rules-section">
-            <h2>Chess Rules</h2>
-            <p>Chess is a two-player strategy board game played on an 8x8 grid. Here are some basic rules:</p>
-            <ul>
-                <li>Each player has 16 pieces, including one king, one queen, two rooks, two knights, two bishops, and eight pawns.</li>
-                <li>The objective is to checkmate your opponent's king, meaning the king is in a position to be captured (in check) and cannot escape capture (mate).</li>
-                <li>Pieces have specific movement rules: for example, pawns move forward one square but capture diagonally, rooks move horizontally or vertically, knights have an L-shaped move, etc.</li>
-                <li>The game ends in a draw under various conditions, including a stalemate or insufficient material for checkmate.</li>
-            </ul>
-            <p>For more detailed rules and strategies, you can explore chess tutorials and books.</p>
-        </div>
-    </div>
+
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/">Chess</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        <h1 class="mx-auto my-0 text-uppercase">Chess</h1>
+                        <a class="btn btn-primary" href="/play/new">New Game</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="about-section" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Rules</h2>
+                        <p>Chess is a two-player strategy board game played on an 8x8 grid. Here are some basic rules:</p>
+                        <ul>
+                            <li>Each player has 16 pieces, including one king, one queen, two rooks, two knights, two bishops, and eight pawns.</li>
+                            <li>The objective is to checkmate your opponent's king, meaning the king is in a position to be captured (in check) and cannot escape capture (mate).</li>
+                            <li>Pieces have specific movement rules: for example, pawns move forward one square but capture diagonally, rooks move horizontally or vertically, knights have an L-shaped move, etc.</li>
+                            <li>The game ends in a draw under various conditions, including a stalemate or insufficient material for checkmate.</li>
+                        </ul>
+                        <p>For more detailed rules and strategies, you can explore chess tutorials and books.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
 }
