@@ -7,6 +7,7 @@
 	grid-auto-columns: 1fr;
 }
 
+/* some hack, so that the board height always equals board width */
 .board::before {
     content: '';
     width: 0;
@@ -14,7 +15,6 @@
     grid-row: 1 / 1;
     grid-column: 1 / 1;
 }
-
 .board > *:first-child{
     grid-row: 1 / 1;
     grid-column: 1 / 1;
@@ -24,6 +24,7 @@
 	display: flex;
 	align-items:center;
 	justify-content:center;
+	container-type: size;
 }
 
 .square_white {
@@ -36,6 +37,9 @@
 
 .square p {
 	margin: 0;
-	font-size: 3.5vw;
 	font-family: Arial;
+	/* % of container’s (.square) height */
+	font-size: 100cqh;
+	/* text ist not selectable */
+	user-select: none;
 }
