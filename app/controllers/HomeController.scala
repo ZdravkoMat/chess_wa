@@ -27,30 +27,30 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.home())
   }
 
-  def game() = Action {
+  def game_play() = Action {
     val squares = controller.squareData()
     val (white_stack, black_stack) = controller.captureStacks()
-    Ok(views.html.game(squares, white_stack, black_stack))
+    Ok(views.html.game_play(squares, white_stack, black_stack))
   }
 
   def newGame = Action {
     controller.doAndPublish(controller.newGame)
-    Redirect(routes.HomeController.game)
+    Redirect(routes.HomeController.game_play)
   }
 
   def move(from: String, to: String) = Action {
     controller.doAndPublish(controller.makeMove, Move(from, to))
-    Redirect(routes.HomeController.game)
+    Redirect(routes.HomeController.game_play)
   }
 
   def undo() = Action {
     controller.doAndPublish(controller.undo)
-    Redirect(routes.HomeController.game)
+    Redirect(routes.HomeController.game_play)
   }
 
   def redo() = Action {
     controller.doAndPublish(controller.redo)
-    Redirect(routes.HomeController.game)
+    Redirect(routes.HomeController.game_play)
   }
 
   def update(e: Event): Unit = e match {
