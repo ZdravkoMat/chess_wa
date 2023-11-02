@@ -29,16 +29,25 @@
 	background: cornsilk;
 }
 
-.square_white .coord_rank {
+.coord {
+	font-size: 13cqh;
+	font-weight: bold;
+
+}
+.coord_rank {
+	align-self: start;
+	margin-left: 4cqh;
+	margin-right: auto;
+}
+.coord_file {
+	align-self: end;
+	margin-right: 4cqh;
+	margin-left: auto;
+}
+.square_white .coord {
 	color: brown;
 }
-.square_white .coord_file {
-	color: brown;
-}
-.square_black .coord_rank {
-	color: cornsilk;
-}
-.square_black .coord_file {
+.square_black .coord {
 	color: cornsilk;
 }
 
@@ -54,17 +63,3 @@
 	user-select: none;
 }
 
-.coord_rank {
-	align-self: start;
-	margin-left: 4cqh;
-	margin-right: auto;
-	font-size: 13cqh;
-	font-weight: bold;
-}
-.coord_file {
-	align-self: end;
-	margin-right: 4cqh;
-	margin-left: auto;
-	font-size: 13cqh;
-	font-weight: bold;
-}
