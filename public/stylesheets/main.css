@@ -1,5 +1,5 @@
-
 .board {
+	font-family: Arial;
 	display: grid;
   grid-template-columns: repeat(8, 1fr);
 	grid-auto-rows: 1fr;
@@ -29,13 +29,25 @@
 	background: cornsilk;
 }
 
+.square_white .coord_rank {
+	color: brown;
+}
+.square_white .coord_file {
+	color: brown;
+}
+.square_black .coord_rank {
+	color: cornsilk;
+}
+.square_black .coord_file {
+	color: cornsilk;
+}
+
 .square_black {
 	background: brown;
 }
 
 .piece {
 	position: absolute;
-	font-family: Arial;
 	/* % of container’s (.square) height */
 	font-size: 100cqh;
 	/* text ist not selectable */
@@ -44,9 +56,13 @@
 
 .coord_rank {
 	align-self: start;
+	margin-left: 4cqh;
 	margin-right: auto;
+	font-size: 15cqh;
 }
 .coord_file {
 	align-self: end;
+	margin-right: 4cqh;
 	margin-left: auto;
+	font-size: 15cqh;
 }
