@@ -58,11 +58,13 @@
 	align-self: start;
 	margin-left: 4cqh;
 	margin-right: auto;
-	font-size: 15cqh;
+	font-size: 13cqh;
+	font-weight: bold;
 }
 .coord_file {
 	align-self: end;
 	margin-right: 4cqh;
 	margin-left: auto;
-	font-size: 15cqh;
+	font-size: 13cqh;
+	font-weight: bold;
 }
