@@ -7,10 +7,10 @@ button.addEventListener("click", function() {
     var url = "";
 
     if(fromValue == "" || toValue == ""){
-        url = "/play/move/empty/empty"
+        url = "/gmae/play/move/empty/empty"
     } else {
-        url = "/play/move/" + fromValue + "/" + toValue;
+        url = "/game/play/move/" + fromValue + "/" + toValue;
     }
-    
+
     window.location.href = url;
 });

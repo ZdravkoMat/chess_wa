@@ -6,10 +6,11 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.home
 
-GET     /play/new					controllers.HomeController.newGame
-GET     /play/move/:from/:to		controllers.HomeController.move(from: String, to: String)
-GET     /play/undo                  controllers.HomeController.undo
-GET     /play/redo                  controllers.HomeController.redo
+GET     /game                				controllers.HomeController.game
+GET    	/game/play/new							controllers.HomeController.newGame
+GET     /game/play/move/:from/:to		controllers.HomeController.move(from: String, to: String)
+GET     /game/play/undo             controllers.HomeController.undo
+GET     /game/play/redo             controllers.HomeController.redo
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
