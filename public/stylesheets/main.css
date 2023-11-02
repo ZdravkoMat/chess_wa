@@ -33,11 +33,20 @@
 	background: brown;
 }
 
-.square p {
-	margin: 0;
+.piece {
+	position: absolute;
 	font-family: Arial;
 	/* % of container’s (.square) height */
 	font-size: 100cqh;
 	/* text ist not selectable */
 	user-select: none;
+}
+
+.coord_rank {
+	align-self: start;
+	margin-right: auto;
+}
+.coord_file {
+	align-self: end;
+	margin-left: auto;
 }

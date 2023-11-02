@@ -1,5 +1,8 @@
 @(squareData: List[(String, String, String)], whiteStack: List[String], blackStack: List[String])
 
+@ranks= @{ List("a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8") }
+@files= @{ List("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1") }
+
 @main("Chess") {
 <div class="container">
     <div class="row">
@@ -12,7 +15,15 @@
 						</div>
             <div class="board">
                 @for((squareCoord, squareStr, squareColor) <- squareData) {
-									<div id="@squareCoord" class="square square_@squareColor"><p>@squareStr</p></div>
+									<div id="@squareCoord" class="square square_@squareColor">
+										<span class="piece">@squareStr</span>
+										@if(ranks.contains(squareCoord)) {
+											<span class="coord_rank">@squareCoord(1)</span>
+										}
+										@if(files.contains(squareCoord)) {
+											<span class="coord_file">@squareCoord(0)</span>
+										}
+									</div>
                 }
             </div>
 						<div class="capture_stack capture_stack_black">
