@@ -1,15 +1,25 @@
-@(squareData: List[(String, String, String)])
+@(squareData: List[(String, String, String)], whiteStack: List[String], blackStack: List[String])
 
 @main("Chess") {
 <div class="container">
     <div class="row">
         <div class="col-1"></div>
         <div class="col-8">
+						<div class="capture_stack capture_stack_white">
+							@for(piece <- whiteStack) {
+								<span class="stack_piece">@piece</span>
+							}
+						</div>
             <div class="board">
                 @for((squareCoord, squareStr, squareColor) <- squareData) {
 									<div id="@squareCoord" class="square square_@squareColor"><p>@squareStr</p></div>
                 }
             </div>
+						<div class="capture_stack capture_stack_black">
+							@for(piece <- blackStack) {
+								<span class="stack_piece">@piece</span>
+							}
+						</div>
         </div>
         <div class="col-2">
             <div class="moveForm">
