@@ -1,21 +1,65 @@
-
 .board {
+	font-family: Arial;
 	display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto;
-	height: 700px;
-	width: 700px;
+  grid-template-columns: repeat(8, 1fr);
 	grid-auto-rows: 1fr;
-	grid-auto-columns: 1fr;
+}
+
+/* some hack, so that the board height always equals board width */
+.board::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+.board > *:first-child{
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
 }
 
 .square {
-  border: 1px solid;
 	display: flex;
 	align-items:center;
 	justify-content:center;
+	container-type: size;
 }
 
-.square p {
-	font-size: 50px;
-	margin: 0;
+.square_white {
+	background: cornsilk;
 }
+
+.coord {
+	font-size: 13cqh;
+	font-weight: bold;
+
+}
+.coord_rank {
+	align-self: start;
+	margin-left: 4cqh;
+	margin-right: auto;
+}
+.coord_file {
+	align-self: end;
+	margin-right: 4cqh;
+	margin-left: auto;
+}
+.square_white .coord {
+	color: brown;
+}
+.square_black .coord {
+	color: cornsilk;
+}
+
+.square_black {
+	background: brown;
+}
+
+.piece {
+	position: absolute;
+	/* % of container’s (.square) height */
+	font-size: 100cqh;
+	/* text ist not selectable */
+	user-select: none;
+}
+
