@@ -7,7 +7,7 @@ button.addEventListener("click", function() {
     var url = "";
 
     if(fromValue == "" || toValue == ""){
-        url = "/gmae/play/move/empty/empty"
+        url = "/game/play/move/empty/empty"
     } else {
         url = "/game/play/move/" + fromValue + "/" + toValue;
     }

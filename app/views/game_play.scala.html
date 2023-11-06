@@ -4,60 +4,56 @@
 @files= @{ List("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1") }
 
 @main("Chess") {
-<div class="container">
-    <div class="row">
-        <div class="col-1"></div>
+    <div class="row" style="scale: 0.9;">
         <div class="col-8">
-						<div class="capture_stack capture_stack_white">
-							@for(piece <- whiteStack) {
-								<span class="stack_piece">@piece</span>
-							}
-						</div>
-            <div class="board">
-                @for((squareCoord, squareStr, squareColor) <- squareData) {
-									<div id="@squareCoord" class="square square_@squareColor">
-										<span class="piece">@squareStr</span>
-										@if(ranks.contains(squareCoord)) {
-											<span class="coord coord_rank">@squareCoord(1)</span>
-										}
-										@if(files.contains(squareCoord)) {
-											<span class="coord coord_file">@squareCoord(0)</span>
-										}
-									</div>
+            <div class="capture_stack capture_stack_white">
+                @for(piece <- whiteStack) { 
+                    <span class="stack_piece">@piece</span>
                 }
             </div>
-						<div class="capture_stack capture_stack_black">
-							@for(piece <- blackStack) {
-								<span class="stack_piece">@piece</span>
-							}
-						</div>
-        </div>
-        <div class="col-2">
-            <div class="moveForm">
-                <form id="myForm">
-                    <label for="from">From:</label>
-                    <input type="text" id="from" name="from" required><br><br>
-
-                    <label for="to">To:</label>
-                    <input type="text" id="to" name="to" required><br><br>
-
-                    <button type="button" id="submitButton">Make Move</button>
-                </form>
+            <div class="board">
+                @for((squareCoord, squareStr, squareColor) <- squareData) { 
+                    <div id="@squareCoord" class="square square_@squareColor">
+                        <span class="piece">@squareStr</span>
+                        @if(ranks.contains(squareCoord)) {
+                            <span class="coord coord_rank">@squareCoord(1)</span>
+                        }
+                        @if(files.contains(squareCoord)) {
+                            <span class="coord coord_file">@squareCoord(0)</span>
+                        }
+                    </div>
+                }
             </div>
-            <div class="">
-                <button onclick="window.location.href='/game/play/undo'">Undo</button>
-            </div>
-            <div class="">
-                <button onclick="window.location.href='/game/play/redo'">Redo</button>
-            </div>
-            <div class="newGame">
-                <button onclick="window.location.href='/game/play/new'">New Game</button>
-            </div>
-            <div class="home">
-                <button onclick="window.location.href='/'">Home</button>
+            <div class="capture_stack capture_stack_black">
+                @for(piece <- blackStack) { 
+                    <span class="stack_piece">@piece</span>
+                }
             </div>
         </div>
-        <div class="col-1"></div>
+        <div class="col-4">
+            <div>
+                <div class="buttons">
+                    <button onclick="window.location.href='/game/play/undo'" type="button" class="btn btn-danger">Undo</button>
+                    <button onclick="window.location.href='/game/play/redo'" type="button" class="btn btn-success">Redo</button>
+                </div>
+                <div class="spacer">
+                    <form id="myForm">
+                        <div class="form-group row spacer">
+                          <label for="from" class="col-sm-2 col-form-label">From</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="from" placeholder="From">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="to" class="col-sm-2 col-form-label">To</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="to" placeholder="To">
+                          </div>
+                        </div>
+                        <button type="button" id="submitButton" type="button" class="btn btn-primary">Make Move</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 }
