@@ -27,6 +27,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.home())
   }
 
+  def rules = Action {
+    Ok(views.html.rules())
+  }
+
   def game_play() = Action {
     val squares = controller.squareData()
     val (white_stack, black_stack) = controller.captureStacks()
