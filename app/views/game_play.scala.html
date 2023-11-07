@@ -15,11 +15,6 @@ winner: String
 @main("Chess") {
     <div class="row" style="scale: 0.9;">
         <div class="col-8">
-            <div class="capture_stack capture_stack_white">
-                @for(piece <- whiteStack) {
-                    <span class="stack_piece">@piece</span>
-                }
-            </div>
             <div class="board">
                 @for((squareCoord, squareStr, squareColor) <- squareData) {
                     <div id="@squareCoord" class="square square_@squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
@@ -33,20 +28,15 @@ winner: String
                     </div>
                 }
             </div>
-            <div class="capture_stack capture_stack_black">
-                @for(piece <- blackStack) {
-                    <span class="stack_piece">@piece</span>
-                }
-            </div>
         </div>
         <div class="col-4">
-            <div>
+            <div class="spacer">
                 <div class="buttons">
                     <button onclick="window.location.href='/game/play/undo'" type="button" class="btn btn-danger">Undo</button>
                     <button onclick="window.location.href='/game/play/redo'" type="button" class="btn btn-success">Redo</button>
                 </div>
                 <div class="spacer">
-                    <form id="myForm">
+                    <form id="myForm" class="hidden">
                         <div class="form-group row spacer">
                           <label for="from" class="col-sm-2 col-form-label">From</label>
                           <div class="col-sm-10">
@@ -61,11 +51,31 @@ winner: String
                         </div>
                         <button type="button" id="submitButton" type="button" class="btn btn-primary">Make Move</button>
                     </form>
-										<div>
-											<div>turn: @turn</div>
-											<div>advantage: @advantage</div>
-											<div>@if(winner != "") {winner: @winner}</div>
-										</div>
+					<div>
+						<div>
+                            <span>Turn: @turn</span>
+                        </div>
+						<div>
+                            <span>Advantage: @advantage</span>
+                        </div>
+						<div>
+                            @if(winner != "") {
+                                <div class="alert alert-success" role="alert">
+                                    Congrats @winner You have won!
+                                </div>
+                            }
+                        </div>
+					</div>     
+                    <div class="capture_stack capture_stack_black">
+                        @for(piece <- blackStack) {
+                            <span class="stack_piece">@piece</span>
+                        }
+                    </div>
+                    <div class="capture_stack capture_stack_white">
+                        @for(piece <- whiteStack) {
+                            <span class="stack_piece">@piece</span>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
