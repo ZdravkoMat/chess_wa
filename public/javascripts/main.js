@@ -1,5 +1,9 @@
 var form = document.getElementById("myForm");
 var button = document.getElementById("submitButton");
+var squares = document.querySelectorAll(".square");
+var mouse_state = "select";
+var from = "";
+var to = "";
 
 button.addEventListener("click", function() {
     var fromValue = document.getElementById("from").value;
@@ -14,3 +18,20 @@ button.addEventListener("click", function() {
 
     window.location.href = url;
 });
+
+squares.forEach(square => {
+	square.addEventListener("click", () => {
+		if (mouse_state == "select") {
+			from = square.id
+			const selected = document.getElementById(from);
+			selected.style.backgroundColor = "lightblue";
+			mouse_state = "move";
+			// window.location.href = "/game/play/move/options/" + from;
+		} else {
+			to = square.id
+			mouse_state = "select"
+			window.location.href = "/game/play/move/" + from + "/" + to;
+		}
+	});
+});
+

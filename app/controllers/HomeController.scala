@@ -11,6 +11,8 @@ import htwg.se.chess.controller.Controller
 import htwg.se.chess.util.Observer
 import htwg.se.chess.util.Event
 import htwg.se.chess.model.boardComponent.Move
+import htwg.se.chess.model.boardComponent.Coord
+import htwg.se.chess.model.boardComponent.Coord._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -32,9 +34,14 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   }
 
   def game_play() = Action {
-    val squares = controller.squareData()
+    val squares = controller.squareDataStr()
     val (white_stack, black_stack) = controller.captureStacks()
-    Ok(views.html.game_play(squares, white_stack, black_stack))
+    val move_options = List()
+    val turn = controller.turn().toString.toLowerCase
+    val advantage = controller.advantage()
+    val king_checked_coord = controller.kingCheckedCoord().getOrElse("").toString.toLowerCase
+    val winner = controller.winner().getOrElse("").toString.toLowerCase
+    Ok(views.html.game_play(squares, white_stack, black_stack, move_options, turn, advantage, king_checked_coord, winner))
   }
 
   def newGame = Action {
@@ -43,9 +50,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   }
 
   def move(from: String, to: String) = Action {
-    controller.doAndPublish(controller.makeMove, Move(from, to))
+    controller.doAndPublish(controller.makeMove, Move(Coord.fromStr(from), Coord.fromStr(to)))
     Redirect(routes.HomeController.game_play)
   }
+
+  // def moveOptions(from: String) = Action {
+  //   val squares = controller.squareDataStr()
+  //   val (white_stack, black_stack) = controller.captureStacks()
+  //   val move_options: List[String] = controller.moveOptions(from).map(_.toString.toLowerCase)
+  //   Ok(views.html.game_play(squares, white_stack, black_stack, move_options))
+  // }
 
   def undo() = Action {
     controller.doAndPublish(controller.undo)

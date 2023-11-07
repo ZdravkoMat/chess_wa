@@ -59,6 +59,13 @@ body {
 	background: brown;
 }
 
+/* .move_option { */
+/* 	background: blue; */
+/* } */
+.king_checked_coord {
+	background: red;
+}
+
 .piece {
 	position: absolute;
 	/* % of container’s (.square) height */

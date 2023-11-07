@@ -1,4 +1,13 @@
-@(squareData: List[(String, String, String)], whiteStack: List[String], blackStack: List[String])
+@(
+squareData: List[(String, String, String)],
+whiteStack: List[String],
+blackStack: List[String],
+move_options: List[String],
+turn: String,
+advantage: Int,
+king_checked_coord: String,
+winner: String
+)
 
 @ranks= @{ List("a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8") }
 @files= @{ List("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1") }
@@ -7,13 +16,13 @@
     <div class="row" style="scale: 0.9;">
         <div class="col-8">
             <div class="capture_stack capture_stack_white">
-                @for(piece <- whiteStack) { 
+                @for(piece <- whiteStack) {
                     <span class="stack_piece">@piece</span>
                 }
             </div>
             <div class="board">
-                @for((squareCoord, squareStr, squareColor) <- squareData) { 
-                    <div id="@squareCoord" class="square square_@squareColor">
+                @for((squareCoord, squareStr, squareColor) <- squareData) {
+                    <div id="@squareCoord" class="square square_@squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
                         <span class="piece">@squareStr</span>
                         @if(ranks.contains(squareCoord)) {
                             <span class="coord coord_rank">@squareCoord(1)</span>
@@ -25,7 +34,7 @@
                 }
             </div>
             <div class="capture_stack capture_stack_black">
-                @for(piece <- blackStack) { 
+                @for(piece <- blackStack) {
                     <span class="stack_piece">@piece</span>
                 }
             </div>
@@ -52,6 +61,11 @@
                         </div>
                         <button type="button" id="submitButton" type="button" class="btn btn-primary">Make Move</button>
                     </form>
+										<div>
+											<div>turn: @turn</div>
+											<div>advantage: @advantage</div>
+											<div>@if(winner != "") {winner: @winner}</div>
+										</div>
                 </div>
             </div>
         </div>
