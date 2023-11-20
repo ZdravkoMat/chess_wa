@@ -4,6 +4,28 @@ var squares = document.querySelectorAll(".square");
 var mouse_state = "select";
 var from = "";
 var to = "";
+var isAlternate = false;
+
+// Function to toggle colors
+function toggleColors() {
+    $('.square').each(function() {
+        if (isAlternate) {
+            $(this).toggleClass('alternate_color_scheme', false);
+        } else {
+            $(this).toggleClass('alternate_color_scheme', true);
+        }
+    });
+    isAlternate = !isAlternate; // Toggle color scheme
+}
+
+// Event listener for the button
+$('#colorChangeBtn').on('click', function() {
+	toggleColors(); // Call the function when the button is clicked
+});
+
+document.getElementById('colorChangeBtn').addEventListener('click', function() {
+	toggleColor(); // Call the function when the button is clicked
+});
 
 button.addEventListener("click", function() {
     var fromValue = document.getElementById("from").value;

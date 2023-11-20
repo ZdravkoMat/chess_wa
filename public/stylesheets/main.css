@@ -63,6 +63,14 @@ body {
 	background: brown;
 }
 
+.square_black.alternate_color_scheme{
+	background-color:	#8b4513;
+}
+
+.square_white.alternate_color_scheme {
+	background-color: #d2b48c;
+}
+
 /* .move_option { */
 /* 	background: blue; */
 /* } */
