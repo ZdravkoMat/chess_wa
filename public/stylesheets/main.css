@@ -32,9 +32,20 @@ body {
 	justify-content:center;
 	container-type: size;
 }
-
-.square_white {
+.square.white {
 	background: cornsilk;
+}
+.square.black {
+	background: brown;
+}
+.square.selected {
+	background: lightblue;
+}
+.square.checked {
+	background: red;
+}
+.square.move_option {
+	background: green;
 }
 
 .coord {
@@ -42,40 +53,29 @@ body {
 	font-weight: bold;
 
 }
-.coord_rank {
+.coord.rank {
 	align-self: start;
 	margin-left: 4cqh;
 	margin-right: auto;
 }
-.coord_file {
+.coord.file {
 	align-self: end;
 	margin-right: 4cqh;
 	margin-left: auto;
 }
-.square_white .coord {
+.square.white .coord {
 	color: brown;
 }
-.square_black .coord {
+.square.black .coord {
 	color: cornsilk;
 }
 
-.square_black {
-	background: brown;
-}
-
-.square_black.alternate_color_scheme{
+.square.black.alternate_color_scheme{
 	background-color:	#8b4513;
 }
 
-.square_white.alternate_color_scheme {
+.square.white.alternate_color_scheme {
 	background-color: #d2b48c;
-}
-
-/* .move_option { */
-/* 	background: blue; */
-/* } */
-.king_checked_coord {
-	background: red;
 }
 
 .piece {
@@ -86,7 +86,7 @@ body {
 	user-select: none;
 }
 
-.stack_piece {
+.capture_stack {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 3cqh;
 	user-select: none;

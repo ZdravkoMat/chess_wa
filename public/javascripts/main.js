@@ -1,59 +1,75 @@
-var form = document.getElementById("myForm");
-var button = document.getElementById("submitButton");
-var squares = document.querySelectorAll(".square");
-var mouse_state = "select";
-var from = "";
-var to = "";
-var isAlternate = false;
+let from = '';
+let to = '';
+let isAlternate = false;
 
-// Function to toggle colors
-function toggleColors() {
-    $('.square').each(function() {
-        if (isAlternate) {
-            $(this).toggleClass('alternate_color_scheme', false);
-        } else {
-            $(this).toggleClass('alternate_color_scheme', true);
-        }
-    });
-    isAlternate = !isAlternate; // Toggle color scheme
-}
+$(document).ready(function() {
+	$('#colorChangeBtn').on('click', function() {
+		toggleColors(); // Call the function when the button is clicked
+	});
 
-// Event listener for the button
-$('#colorChangeBtn').on('click', function() {
-	toggleColors(); // Call the function when the button is clicked
-});
-
-document.getElementById('colorChangeBtn').addEventListener('click', function() {
-	toggleColor(); // Call the function when the button is clicked
-});
-
-button.addEventListener("click", function() {
-    var fromValue = document.getElementById("from").value;
-    var toValue = document.getElementById("to").value;
-    var url = "";
-
-    if(fromValue == "" || toValue == ""){
-        url = "/game/play/move/empty/empty"
-    } else {
-        url = "/game/play/move/" + fromValue + "/" + toValue;
-    }
-
-    window.location.href = url;
-});
-
-squares.forEach(square => {
-	square.addEventListener("click", () => {
-		if (mouse_state == "select") {
-			from = square.id
-			const selected = document.getElementById(from);
-			selected.style.backgroundColor = "lightblue";
-			mouse_state = "move";
-			// window.location.href = "/game/play/move/options/" + from;
-		} else {
-			to = square.id
-			mouse_state = "select"
-			window.location.href = "/game/play/move/" + from + "/" + to;
+	$('.square').on('click', function() {
+		if (from == '') {
+			from = this.id
+			$(this).addClass('selected')
+			moveOptions(from)
+		}
+		else {
+			to = this.id
+			$.get('/game/play/move/' + from + '/' + to, function(data) {
+				updateBoard()
+				$('.selected').removeClass('selected')
+				$('.move_option').removeClass('move_option')
+				from = ''
+				to = ''
+			});
 		}
 	});
 });
 
+// Function to toggle colors
+function toggleColors() {
+	$('.square').each(function() {
+		if (isAlternate) {
+			$(this).toggleClass('alternate_color_scheme', false);
+		} else {
+			$(this).toggleClass('alternate_color_scheme', true);
+		}
+	});
+	isAlternate = !isAlternate; // Toggle color scheme
+}
+
+function updateBoard() {
+	$('.checked').removeClass('checked')
+	$.ajax({
+		method: 'GET',
+		url: '/boardJson',
+		dataType: 'json',
+
+		success: function (result) {
+			const squares = result.board.squares
+			for (const square in squares) {
+				$('#' + square + ' .piece').html(squares[square].piece)
+			}
+			$('#turn').html(result.board.turn)
+			$('#advantage').html(result.board.advantage)
+			$('#winner').html(result.board.winner)
+			$('.capture_stack.white').html(result.board.capture_stack.white)
+			$('.capture_stack.black').html(result.board.capture_stack.black)
+			if(result.board.checked != '') {
+				$('#' + result.board.checked).addClass('checked')
+			}
+		}
+	});
+}
+
+function moveOptions(from) {
+	$.ajax({
+		method: 'GET',
+		url: '/moveOptionsJson/' + from,
+		dataType: 'json',
+
+		success: function (move_options) {
+			move_options.forEach(coord => $('#' + coord).addClass('move_option') )
+		}
+	});
+}

@@ -19,11 +19,11 @@ import htwg.se.chess.model.boardComponent.Coord._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController with Observer {
+class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
   val board = Board()
   val controller = Controller(board)
 
-  controller.add(this)
+  // controller.add(this)
 
   def home = Action {
     Ok(views.html.home())
@@ -71,8 +71,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Redirect(routes.HomeController.game_play)
   }
 
-  def update(e: Event): Unit = e match {
-    case Event.Quit =>
-    case Event.Move =>
+  def boardJson = Action {
+    Ok(controller.boardJson())
   }
+
+  def moveOptionsJson(from: String) = Action {
+    Ok(controller.moveOptionsJson(Coord.fromStr(from)))
+  }
+
 }
