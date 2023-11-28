@@ -78,6 +78,10 @@ body {
 	background-color: #d2b48c;
 }
 
+.square.move_option.alternate_color_scheme {
+	background: green;
+}
+
 .piece {
 	position: absolute;
 	/* % of container’s (.square) height */
