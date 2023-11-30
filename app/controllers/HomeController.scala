@@ -51,7 +51,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def move(from: String, to: String) = Action {
     controller.doAndPublish(controller.makeMove, Move(Coord.fromStr(from), Coord.fromStr(to)))
-    Redirect(routes.HomeController.game_play)
+    Ok("Move done...")
+    // Redirect(routes.HomeController.game_play)
   }
 
   // def moveOptions(from: String) = Action {
