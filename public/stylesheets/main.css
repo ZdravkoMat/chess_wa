@@ -38,14 +38,21 @@ body {
 .square.black {
 	background: brown;
 }
+.square.black.alternate_color_scheme{
+	background-color:	#8b4513;
+}
+.square.white.alternate_color_scheme {
+	background-color: #d2b48c;
+}
+
 .square.selected {
-	background: lightblue;
+	filter: brightness(0.7);
 }
 .square.checked {
-	background: red;
+	background: red !important;
 }
 .square.move_option {
-	background: green;
+	filter: brightness(0.4);
 }
 
 .coord {
@@ -70,23 +77,9 @@ body {
 	color: cornsilk;
 }
 
-.square.black.alternate_color_scheme{
-	background-color:	#8b4513;
-}
-
-.square.white.alternate_color_scheme {
-	background-color: #d2b48c;
-}
-
-.square.move_option.alternate_color_scheme {
-	background: green;
-}
-
 .piece {
 	position: absolute;
-	/* % of container’s (.square) height */
 	font-size: 100cqh;
-	/* text ist not selectable */
 	user-select: none;
 }
 
