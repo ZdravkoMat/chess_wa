@@ -3,10 +3,16 @@ let to = '';
 let isAlternate = false;
 
 $(document).ready(function() {
+	$('#colorChangeBtn').click(toggleColors);
 	$('.square').click(squareClick);
 	$('#undo').click(undo);
 	$('#redo').click(redo);
-	$('#colorChangeBtn').click(toggleColors);
+	$(document).keydown(function (e) {
+    if (e.which === 37) undo(); //left arrow key
+  });
+	$(document).keydown(function (e) {
+    if (e.which === 39) redo(); //right arrow key
+  });
 });
 
 function move(from, to) {
@@ -15,19 +21,8 @@ function move(from, to) {
 		url: `/game/play/move/${from}/${to}`,
 
 		success: function (result) {
+			removeSelection()
 			updateBoard()
-		}
-	});
-}
-
-function moveOptions(from) {
-	$.ajax({
-		method: 'GET',
-		url: `/moveOptionsJson/${from}`,
-		dataType: 'json',
-
-		success: function (move_options) {
-			move_options.forEach(coord => $('#' + coord).addClass('move_option') )
 		}
 	});
 }
@@ -38,6 +33,7 @@ function undo() {
 		url: '/game/play/undo',
 
 		success: function (result) {
+			removeSelection()
 			updateBoard()
 		}
 	});
@@ -49,6 +45,7 @@ function redo() {
 		url: '/game/play/redo',
 
 		success: function (result) {
+			removeSelection()
 			updateBoard()
 		}
 	});
@@ -63,17 +60,26 @@ function updateBoard() {
 
 		success: function (result) {
 			const squares = result.board.squares
-			for (const square in squares) {
-				$('#' + square + ' .piece').html(squares[square].piece)
-			}
+			for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
 			$('#turn').html(result.board.turn)
 			$('#advantage').html(result.board.advantage)
 			$('#winner').html(result.board.winner)
 			$('.capture_stack.white').html(result.board.capture_stack.white)
 			$('.capture_stack.black').html(result.board.capture_stack.black)
-			if(result.board.checked != '') {
-				$('#' + result.board.checked).addClass('checked')
-			}
+			if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
+		}
+	});
+}
+
+function moveOptions(from) {
+	$.ajax({
+		method: 'GET',
+		url: `/moveOptionsJson/${from}`,
+		dataType: 'json',
+
+		success: function (move_options) {
+			$(`#${from}`).addClass('selected')
+			move_options.forEach(coord => $(`#${coord}`).addClass('move_option') )
 		}
 	});
 }
@@ -91,18 +97,21 @@ function toggleColors() {
 }
 
 function squareClick() {
+	let square = this;
 	if (from == '') {
-		from = this.id
-		$(this).addClass('selected')
+		from = square.id
 		moveOptions(from)
 	}
 	else {
-		to = this.id
+		to = square.id
 		move(from, to)
-		$('.selected').removeClass('selected')
-		$('.move_option').removeClass('move_option')
 		from = ''
 		to = ''
 	}
+}
+
+function removeSelection() {
+	$('.selected').removeClass('selected')
+	$('.move_option').removeClass('move_option')
 }
 
