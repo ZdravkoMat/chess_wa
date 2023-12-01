@@ -7,13 +7,13 @@ $(document).ready(function() {
 	$('.square').click(squareClick);
 	$('#undo').click(undo);
 	$('#redo').click(redo);
-	$(document).keydown(function (e) {
-    if (e.which === 37) undo(); //left arrow key
-  });
-	$(document).keydown(function (e) {
-    if (e.which === 39) redo(); //right arrow key
-  });
+	$(document).keydown(shortcuts)
 });
+
+function shortcuts(e) {
+	if (e.which === 37) undo(); //left arrow key
+	else if (e.which === 39) redo(); //right arrow key
+}
 
 function move(from, to) {
 	$.ajax({
@@ -59,8 +59,8 @@ function updateBoard() {
 		dataType: 'json',
 
 		success: function (result) {
-			const squares = result.board.squares
-			for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
+			let squares = result.board.squares
+			for (let square in squares) $(`#${square} .piece`).html(squares[square].piece)
 			$('#turn').html(result.board.turn)
 			$('#advantage').html(result.board.advantage)
 			$('#winner').html(result.board.winner)
