@@ -112,7 +112,7 @@ body {
 	overflow: hidden;
 	outline: none;
 	font-size: 25px;
-	font-weight: bold;
+	/* font-weight: bold; */
 }
 .undo_redo:hover {
 	background-color: brown;
