@@ -10,11 +10,6 @@ $(document).ready(function() {
 	$(document).keydown(shortcuts)
 });
 
-function shortcuts(e) {
-	if (e.which === 37) undo(); //left arrow key
-	else if (e.which === 39) redo(); //right arrow key
-}
-
 function move(from, to) {
 	$.ajax({
 		method: 'GET',
@@ -59,13 +54,14 @@ function updateBoard() {
 		dataType: 'json',
 
 		success: function (result) {
-			let squares = result.board.squares
-			for (let square in squares) $(`#${square} .piece`).html(squares[square].piece)
-			$('#turn').html(result.board.turn)
-			$('#advantage').html(result.board.advantage)
+			const squares = result.board.squares
+			for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
+			removePlayerPanelState()
+			$(`.player_panel.${result.board.turn}`).addClass('turn')
+			$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
 			$('#winner').html(result.board.winner)
-			$('.capture_stack.white').html(result.board.capture_stack.white)
-			$('.capture_stack.black').html(result.board.capture_stack.black)
+			$('.player_panel.white > .capture_stack > .pieces').html(result.board.capture_stack.white)
+			$('.player_panel.black > .capture_stack > .pieces').html(result.board.capture_stack.black)
 			if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
 		}
 	});
@@ -84,6 +80,11 @@ function moveOptions(from) {
 	});
 }
 
+function shortcuts(e) {
+	if (e.which === 37) undo(); //left arrow key
+	else if (e.which === 39) redo(); //right arrow key
+}
+
 // Function to toggle colors
 function toggleColors() {
 	$('.square').each(function() {
@@ -97,7 +98,7 @@ function toggleColors() {
 }
 
 function squareClick() {
-	let square = this;
+	const square = this;
 	if (from == '') {
 		from = square.id
 		moveOptions(from)
@@ -113,5 +114,10 @@ function squareClick() {
 function removeSelection() {
 	$('.selected').removeClass('selected')
 	$('.move_option').removeClass('move_option')
+}
+
+function removePlayerPanelState() {
+	$('.turn').removeClass('turn')
+	$('.has_advantage').html('').removeClass('has_advantage')
 }
 

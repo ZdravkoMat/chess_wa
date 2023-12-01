@@ -14,72 +14,51 @@ winner: String
 
 @main("Chess") {
 <div class="row" style="scale: 0.9;">
-	<div class="col-8">
-		<div class="board">
-			@for((squareCoord, squareStr, squareColor) <- squareData) {
-				<div id="@squareCoord" class="square @squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
-					<span class="piece">@squareStr</span>
-					@if(ranks.contains(squareCoord)) {
-						<span class="coord rank">@squareCoord(1)</span>
-					}
-					@if(files.contains(squareCoord)) {
-						<span class="coord file">@squareCoord(0)</span>
-					}
-				</div>
+
+	<div class="board col-8">
+		@for((squareCoord, squareStr, squareColor) <- squareData) {
+			<div id="@squareCoord" class="square @squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
+				<span class="piece">@squareStr</span>
+				@if(ranks.contains(squareCoord)) {
+					<span class="coord rank">@squareCoord(1)</span>
 				}
-		</div>
-	</div>
-	<div class="col-4">
-		<div class="spacer">
-			<div class="buttons">
-				<button id="undo" type="button" class="btn btn-danger">Undo</button>
-				<button id="redo" type="button" class="btn btn-success">Redo</button>
-				<button id="colorChangeBtn" type="button" class="btn btn-primary">Change Color</button>
+				@if(files.contains(squareCoord)) {
+					<span class="coord file">@squareCoord(0)</span>
+				}
 			</div>
-			<div class="spacer">
-				<form id="myForm" class="hidden">
-					<div class="form-group row spacer">
-						<label for="from" class="col-sm-2 col-form-label">From</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="from" placeholder="From">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="to" class="col-sm-2 col-form-label">To</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="to" placeholder="To">
-						</div>
-					</div>
-					<button type="button" id="submitButton" type="button" class="btn btn-primary">Make Move</button>
-				</form>
-				<div>
-					<div>
-						Turn: <span id="turn">@turn</span>
-					</div>
-					<div>
-						Advantage: <span id="advantage">@advantage</span>
-					</div>
-					<div>
-						Winner: <span id="winner"> @winner </span>
-					</div>
-				</div>
-				<div>
-					<span class="capture_stack white">
-						@for(piece <- whiteStack) {
-							@piece
-						}
-					</span>
-				</div>
-				<div>
-					<span class="capture_stack black">
-						@for(piece <- blackStack) {
-							@piece
-						}
-					</span>
-				</div>
+			}
+	</div>
+
+	<div id="info_panel" class="col-4">
+		<div class="player_panel black">
+			<div class="capture_stack">
+				<span class="pieces">
+					@for(piece <- blackStack) {
+						@piece
+					}
+				</span>
+				<span class="advantage"></span>
+			</div>
+			<div class="name">PLAYER: Black  </div>
+		</div>
+		<div class="buttons">
+			<button id="undo" type="button" class="undo_redo">&#8678;</button>
+			<button id="redo" type="button" class="undo_redo">&#8680;</button>
+			<button id="colorChangeBtn" type="button">Change Color  </button>
+		</div>
+		<div class="player_panel white turn">
+			<div class="name">PLAYER: White</div>
+			<div class="capture_stack">
+				<span class="pieces">
+					@for(piece <- whiteStack) {
+						@piece
+					}
+				</span>
+				<span class="advantage"></span>
 			</div>
 		</div>
 	</div>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 }
