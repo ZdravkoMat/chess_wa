@@ -45,26 +45,38 @@ body {
 	background-color: #d2b48c;
 }
 
-.square.selected {
-	filter: brightness(0.7);
+.selected {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(52, 61, 235, 0.7);
 }
+
 .square.checked {
 	background: red !important;
 }
-.square.move_option {
-	filter: brightness(0.4);
+.move_option {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(50, 168, 94, 0.7);
 }
 
 .coord {
+	z-index: 1;
 	font-size: 13cqh;
 	font-weight: bold;
 }
 .coord.rank {
+	/* position: absolute; */
 	align-self: start;
 	margin-left: 4cqh;
 	margin-right: auto;
 }
 .coord.file {
+	/* position: absolute; */
 	align-self: end;
 	margin-right: 4cqh;
 	margin-left: auto;
@@ -78,6 +90,7 @@ body {
 
 .piece {
 	position: absolute;
+	z-index: 1;
 	font-size: 100cqh;
 	user-select: none;
 }

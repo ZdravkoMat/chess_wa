@@ -40,7 +40,6 @@ function undoTo() {
 	$.ajax({
 		method: 'GET',
 		url: `/game/play/undoTo/${move.id}`,
-		// url: `/game/play/undoTo/1`,
 
 		success: function (result) {
 			clearSelection()
@@ -92,8 +91,9 @@ function moveOptions(from) {
 		dataType: 'json',
 
 		success: function (move_options) {
-			$(`#${from}`).addClass('selected')
-			move_options.forEach(coord => $(`#${coord}`).addClass('move_option') )
+			// $(`#${from}`).addClass('selected')
+			$(`#${from}`).append('<div class="selected"></div>')
+			move_options.forEach(coord => $(`#${coord}`).append('<div class="move_option"></div>'))
 		}
 	});
 }
@@ -130,8 +130,8 @@ function squareClick() {
 }
 
 function clearSelection() {
-	$('.selected').removeClass('selected')
-	$('.move_option').removeClass('move_option')
+	$('.selected').remove()
+	$('.move_option').remove()
 }
 
 function clearInfoPanel() {
