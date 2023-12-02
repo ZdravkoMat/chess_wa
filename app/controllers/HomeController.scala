@@ -64,12 +64,17 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def undo() = Action {
     controller.doAndPublish(controller.undo)
-    Redirect(routes.HomeController.game_play)
+    Ok("Undo to done...")
+  }
+
+  def undoTo(i: String) = Action {
+    controller.doUndoTo(controller.undoTo, i.toInt)
+    Ok("UndoTo done...")
   }
 
   def redo() = Action {
     controller.doAndPublish(controller.redo)
-    Redirect(routes.HomeController.game_play)
+    Ok("Redo done...")
   }
 
   def boardJson = Action {

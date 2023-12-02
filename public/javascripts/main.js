@@ -7,7 +7,8 @@ $(document).ready(function() {
 	$('.square').click(squareClick);
 	$('#undo').click(undo);
 	$('#redo').click(redo);
-	$(document).keydown(shortcuts)
+	$(document).keydown(shortcuts);
+	updateBoard();
 });
 
 function move(from, to) {
@@ -16,7 +17,7 @@ function move(from, to) {
 		url: `/game/play/move/${from}/${to}`,
 
 		success: function (result) {
-			removeSelection()
+			clearSelection()
 			updateBoard()
 		}
 	});
@@ -28,7 +29,21 @@ function undo() {
 		url: '/game/play/undo',
 
 		success: function (result) {
-			removeSelection()
+			clearSelection()
+			updateBoard()
+		}
+	});
+}
+
+function undoTo() {
+	const move = this
+	$.ajax({
+		method: 'GET',
+		url: `/game/play/undoTo/${move.id}`,
+		// url: `/game/play/undoTo/1`,
+
+		success: function (result) {
+			clearSelection()
 			updateBoard()
 		}
 	});
@@ -40,7 +55,7 @@ function redo() {
 		url: '/game/play/redo',
 
 		success: function (result) {
-			removeSelection()
+			clearSelection()
 			updateBoard()
 		}
 	});
@@ -54,15 +69,18 @@ function updateBoard() {
 		dataType: 'json',
 
 		success: function (result) {
+			clearInfoPanel()
 			const squares = result.board.squares
 			for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
-			removePlayerPanelState()
+			const moves = result.board.moves
+			for (const move in moves) $('#moves').append(`<div id="${parseInt(move)+1}" class="move">${moves[move]}</div>`)
 			$(`.player_panel.${result.board.turn}`).addClass('turn')
 			$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
 			$('#winner').html(result.board.winner)
 			$('.player_panel.white > .capture_stack > .pieces').html(result.board.capture_stack.white)
 			$('.player_panel.black > .capture_stack > .pieces').html(result.board.capture_stack.black)
 			if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
+			$('.move').click(undoTo);
 		}
 	});
 }
@@ -111,13 +129,14 @@ function squareClick() {
 	}
 }
 
-function removeSelection() {
+function clearSelection() {
 	$('.selected').removeClass('selected')
 	$('.move_option').removeClass('move_option')
 }
 
-function removePlayerPanelState() {
+function clearInfoPanel() {
 	$('.turn').removeClass('turn')
 	$('.has_advantage').html('').removeClass('has_advantage')
+	$('#moves').empty()
 }
 
