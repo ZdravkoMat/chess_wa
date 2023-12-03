@@ -186,5 +186,3 @@ function nextGameTheme() {
 	$('#game_theme').removeClass()
 	$('#game_theme').addClass(game_themes[current_game_theme])
 }
-
->>>>>>> main
