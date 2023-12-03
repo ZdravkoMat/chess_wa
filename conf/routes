@@ -8,14 +8,16 @@ GET     /                           		controllers.HomeController.home
 GET     /rules                      		controllers.HomeController.rules
 
 GET     /game/play                			controllers.HomeController.game_play
-GET    	/game/play/new									controllers.HomeController.newGame
+GET    	/game/play/new						controllers.HomeController.newGame
 # GET     /game/play/move/options/:from		controllers.HomeController.moveOptions(from)
-GET     /game/play/move/:from/:to				controllers.HomeController.move(from, to)
+GET     /game/play/move/:from/:to			controllers.HomeController.move(from, to)
 GET     /game/play/undo             		controllers.HomeController.undo
 GET     /game/play/redo             		controllers.HomeController.redo
 
-GET     /boardJson                      controllers.HomeController.boardJson
-GET     /moveOptionsJson/:from          controllers.HomeController.moveOptionsJson(from)
+GET     /boardJson                          controllers.HomeController.boardJson
+GET     /moveOptionsJson/:from              controllers.HomeController.moveOptionsJson(from)
+
+GET     /websocket                          controllers.HomeController.socket
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               		controllers.Assets.versioned(path="/public", file: Asset)

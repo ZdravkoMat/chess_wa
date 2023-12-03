@@ -14,12 +14,17 @@ import htwg.se.chess.model.boardComponent.Move
 import htwg.se.chess.model.boardComponent.Coord
 import htwg.se.chess.model.boardComponent.Coord._
 
+import play.api.libs.streams.ActorFlow
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+import akka.actor._
+
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents) (implicit system: ActorSystem) extends BaseController {
   val board = Board()
   val controller = Controller(board)
 
@@ -77,6 +82,29 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def moveOptionsJson(from: String) = Action {
     Ok(controller.moveOptionsJson(Coord.fromStr(from)))
+  }
+
+  def socket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      MyWebSocketActor.props(out)
+    }
+  }
+
+  object MyWebSocketActor {
+    def props(out: ActorRef) = {
+      println("Connect received")
+      Props(new MyWebSocketActor(out))
+    }
+  }
+
+  class MyWebSocketActor(out: ActorRef) extends Actor {
+    println("Class created")
+    def receive = {
+      case msg: String =>
+        out ! ("I received your message: " + msg)
+        println("Message received: " + msg)
+    }
   }
 
 }

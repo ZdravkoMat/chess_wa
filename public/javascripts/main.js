@@ -24,6 +24,8 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	connectWebSocket()
 });
 
 // Function to toggle colors
@@ -80,6 +82,8 @@ function connectWebSocket() {
 
 	websocket.onopen = function(event) {
 		console.log("Connection established!");
+		websocket.send("Trying to connect");
+		console.log("Message sent!");
 	};
 
 	websocket.onclose = function(event) {
@@ -91,6 +95,14 @@ function connectWebSocket() {
 	};
 
 	websocket.onmessage = function(event) {
-		console.log("Message received: " + event.data);
+		if (typeof e.data === "string") {
+            console.log('String message received: ' + e.data);
+        }
+        else if (e.data instanceof ArrayBuffer) {
+            console.log('ArrayBuffer received: ' + e.data);
+        }
+        else if (e.data instanceof Blob) {
+            console.log('Blob received: ' + e.data);
+        }
 	};
 }
