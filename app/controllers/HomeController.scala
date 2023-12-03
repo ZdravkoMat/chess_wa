@@ -56,24 +56,28 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
 
   def move(from: String, to: String) = Action {
     controller.doAndPublish(controller.makeMove, Move(Coord.fromStr(from), Coord.fromStr(to)))
-    Redirect(routes.HomeController.game_play)
+    Ok("Move done...")
+    // Redirect(routes.HomeController.game_play)
   }
-
-  // def moveOptions(from: String) = Action {
-  //   val squares = controller.squareDataStr()
-  //   val (white_stack, black_stack) = controller.captureStacks()
-  //   val move_options: List[String] = controller.moveOptions(from).map(_.toString.toLowerCase)
-  //   Ok(views.html.game_play(squares, white_stack, black_stack, move_options))
-  // }
 
   def undo() = Action {
     controller.doAndPublish(controller.undo)
-    Redirect(routes.HomeController.game_play)
+    Ok("Undo to done...")
+  }
+
+  def undoTo(n: String) = Action {
+    controller.doUndoTo(controller.undoTo, n.toInt)
+    Ok("UndoTo done...")
   }
 
   def redo() = Action {
     controller.doAndPublish(controller.redo)
-    Redirect(routes.HomeController.game_play)
+    Ok("Redo done...")
+  }
+
+  def redoSteps(i: String) = Action {
+    controller.doRedoSteps(controller.redoSteps, i.toInt)
+    Ok("RedoSteps done...")
   }
 
   def boardJson = Action {

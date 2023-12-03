@@ -1,0 +1,67 @@
+@import './board';
+@import './info-panel';
+
+@mixin gameTheme($name, $color_square_white, $color_square_black, $color_square_selected, $color_square_move_option, $color_square_checked, $color_info_panel, $color_text) {
+  .#{$name} {
+		.row {
+			.board {
+				.square {
+					&.white {
+						background-color: $color_square_white;
+						.coord {
+							color: $color_square_black;
+						}
+					}
+					&.black {
+						background-color: $color_square_black;
+						.coord {
+							color: $color_square_white;
+						}
+					}
+					&.checked {
+						background-color: $color_square_checked !important;
+					}
+					.selected {
+						background-color: rgba($color_square_selected, 0.7);
+					}
+					.move_option {
+						background-color: rgba($color_square_move_option, 0.7);
+					}
+				}
+			}
+			#info_panel {
+				color: $color_text;
+				background-color: $color_info_panel;
+				#moves {
+					.move, .redo_move {
+						&:hover {
+							background-color: $color_square_black;
+						}
+						&.current {
+							background-color: $color_square_black;
+						}
+					}
+				}
+				.buttons {
+					#undo, #redo, #colorChangeBtn {
+						color: $color_text;
+						&:hover {
+							background-color: $color_square_black;
+						}
+					}
+				}
+				.player_panel {
+					&.turn {
+						.name {
+							background-color: lighten($color_info_panel, 10%);
+						}
+					}
+				}
+			}
+		}
+  }
+}
+
+@include gameTheme(game_theme_0, cornsilk, brown, blue, green, red, DimGrey, HoneyDew);
+@include gameTheme(game_theme_1, #d2b48c, #8b4513, blue, green, red, DimGrey, HoneyDew);
+
