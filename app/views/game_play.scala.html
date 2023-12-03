@@ -13,53 +13,56 @@ winner: String
 @files= @{ List("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1") }
 
 @main("Chess") {
-<div class="row" style="scale: 0.9;">
+<div id="game_theme" class="game_theme_0">
+	<div class="row" style="scale: 0.9;">
 
-	<div class="board col-8">
-		@for((squareCoord, squareStr, squareColor) <- squareData) {
-			<div id="@squareCoord" class="square @squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
-				<span class="piece">@squareStr</span>
-				@if(ranks.contains(squareCoord)) {
-					<span class="coord rank">@squareCoord(1)</span>
-				}
-				@if(files.contains(squareCoord)) {
-					<span class="coord file">@squareCoord(0)</span>
-				}
-			</div>
+		<div class="board col-8">
+			@for((squareCoord, squareStr, squareColor) <- squareData) {
+				<div id="@squareCoord" class="square @squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
+					<span class="piece">@squareStr</span>
+					@if(ranks.contains(squareCoord)) {
+						<span class="coord rank">@squareCoord(1)</span>
+					}
+					@if(files.contains(squareCoord)) {
+						<span class="coord file">@squareCoord(0)</span>
+					}
+				</div>
 			}
-	</div>
+		</div>
 
-	<div id="info_panel" class="col-4">
-		<div class="player_panel black">
-			<div class="capture_stack">
-				<span class="pieces">
-					@for(piece <- blackStack) {
-						@piece
-					}
-				</span>
-				<span class="advantage"></span>
+		<div id="info_panel" class="col-4">
+			<div class="player_panel black">
+				<div class="capture_stack">
+					<span class="pieces">
+						@for(piece <- blackStack) {
+							@piece
+						}
+					</span>
+					<span class="advantage"></span>
+				</div>
+				<div class="name">PLAYER: Black</div>
 			</div>
-			<div class="name">PLAYER: Black  </div>
-		</div>
-		<div id="moves"></div>
-		<div class="buttons">
-			<button id="undo" type="button" class="undo_redo">&#8678;</button>
-			<button id="redo" type="button" class="undo_redo">&#8680;</button>
-			<button id="colorChangeBtn" type="button">Change Color  </button>
-		</div>
-		<div class="player_panel white turn">
-			<div class="name">PLAYER: White</div>
-			<div class="capture_stack">
-				<span class="pieces">
-					@for(piece <- whiteStack) {
-						@piece
-					}
-				</span>
-				<span class="advantage"></span>
+			<div id="moves"></div>
+			<div class="buttons">
+				<button id="undo" type="button">&#8678;</button>
+				<button id="redo" type="button">&#8680;</button>
+				<button id="colorChangeBtn" type="button">Change Color</button>
+			</div>
+			<div id="winner"></div>
+			<div class="player_panel white turn">
+				<div class="name">PLAYER: White</div>
+				<div class="capture_stack">
+					<span class="pieces">
+						@for(piece <- whiteStack) {
+							@piece
+						}
+					</span>
+					<span class="advantage"></span>
+				</div>
 			</div>
 		</div>
-	</div>
 
+	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 }

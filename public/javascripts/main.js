@@ -1,12 +1,13 @@
 let from = '';
 let to = '';
-let isAlternate = false;
+let current_game_theme = 0;
+const game_themes = ['game_theme_0', 'game_theme_1']
 
 $(document).ready(function() {
-	$('#colorChangeBtn').click(toggleColors);
 	$('.square').click(squareClick);
 	$('#undo').click(undo);
 	$('#redo').click(redo);
+	$('#colorChangeBtn').click(nextGameTheme);
 	$(document).keydown(shortcuts);
 	updateBoard();
 });
@@ -93,7 +94,8 @@ function updateBoard() {
 			for (const move in redo_moves) $('#moves').append(`<div id="${current_move + parseInt(move) + 1}" class="redo_move">${redo_moves[move]}</div>`)
 			$(`.player_panel.${result.board.turn}`).addClass('turn')
 			$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
-			$('#winner').html(result.board.winner)
+			const winner = result.board.winner
+			$('#winner').html((winner != '') ? winner.charAt(0).toUpperCase() + winner.slice(1) + ' has won the game!' : '')
 			$('.player_panel.white > .capture_stack > .pieces').html(result.board.capture_stack.white)
 			$('.player_panel.black > .capture_stack > .pieces').html(result.board.capture_stack.black)
 			if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
@@ -121,18 +123,6 @@ function shortcuts(e) {
 	else if (e.which === 39) redo() //right arrow key
 }
 
-// Function to toggle colors
-function toggleColors() {
-	$('.square').each(function() {
-		if (isAlternate) {
-			$(this).toggleClass('alternate_color_scheme', false);
-		} else {
-			$(this).toggleClass('alternate_color_scheme', true);
-		}
-	});
-	isAlternate = !isAlternate; // Toggle color scheme
-}
-
 function squareClick() {
 	const square = this;
 	if (from == '') {
@@ -156,5 +146,12 @@ function clearInfoPanel() {
 	$('.turn').removeClass('turn')
 	$('.has_advantage').html('').removeClass('has_advantage')
 	$('#moves').empty()
+}
+
+function nextGameTheme() {
+	current_game_theme++
+	current_game_theme = (current_game_theme >= game_themes.length) ? 0 : current_game_theme
+	$('#game_theme').removeClass()
+	$('#game_theme').addClass(game_themes[current_game_theme])
 }
 

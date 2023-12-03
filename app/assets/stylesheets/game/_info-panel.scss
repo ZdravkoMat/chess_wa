@@ -1,0 +1,55 @@
+
+#info_panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-family: Arial, Helvetica, sans-serif;
+	user-select: none;
+	padding: 10px;
+	margin: 0px;
+	#moves {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		.move, .redo_move {
+			padding: 1px;
+		}
+	}
+	.buttons {
+		display: flex;
+		#undo, #redo, #colorChangeBtn {
+			background-color: transparent;
+			background-repeat: no-repeat;
+			border: none;
+			cursor: pointer;
+			overflow: hidden;
+			outline: none;
+			margin-top: 0.3em;
+		}
+		#undo, #redo {
+			flex: 1;
+			font-size: 1.4em
+		}
+		#colorChangeBtn {
+			flex: 3;
+		}
+	}
+	.player_panel {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		&.white {
+			border-top: 2px solid;
+		}
+		&.black {
+			border-bottom: 2px solid;
+		}
+		.capture_stack {
+			height: 1.5em;
+		}
+		.name {
+			font-weight: bold;
+			padding: 1px;
+		}
+	}
+}
+
+
