@@ -52,7 +52,6 @@ function redoSteps() {
 	const redo_move = this.id
 	let current_move = $('.move.current').attr('id')
 	current_move = (current_move == null) ? '0' : current_move
-	console.log(current_move)
 	$.ajax({
 		method: 'GET',
 		url: `/game/play/redoSteps/${parseInt(redo_move) - current_move}`,
