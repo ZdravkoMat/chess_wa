@@ -50,7 +50,9 @@ function undoTo() {
 
 function redoSteps() {
 	const redo_move = this.id
-	const current_move = $('.move.current').attr('id')
+	let current_move = $('.move.current').attr('id')
+	current_move = (current_move == null) ? '0' : current_move
+	console.log(current_move)
 	$.ajax({
 		method: 'GET',
 		url: `/game/play/redoSteps/${parseInt(redo_move) - current_move}`,
