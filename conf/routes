@@ -12,8 +12,9 @@ GET    	/game/play/new									controllers.HomeController.newGame
 # GET     /game/play/move/options/:from		controllers.HomeController.moveOptions(from)
 GET     /game/play/move/:from/:to				controllers.HomeController.move(from, to)
 GET     /game/play/undo             		controllers.HomeController.undo
-GET     /game/play/undoTo/:i            controllers.HomeController.undoTo(i)
+GET     /game/play/undoTo/:n            controllers.HomeController.undoTo(n)
 GET     /game/play/redo             		controllers.HomeController.redo
+GET     /game/play/redoSteps/:i         controllers.HomeController.redoSteps(i)
 
 GET     /boardJson                      controllers.HomeController.boardJson
 GET     /moveOptionsJson/:from          controllers.HomeController.moveOptionsJson(from)

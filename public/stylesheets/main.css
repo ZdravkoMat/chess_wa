@@ -114,8 +114,13 @@ body {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
-
 .move:hover {
+	background-color: brown;
+}
+.move.current {
+	background-color: brown;
+}
+.redo_move:hover {
 	background-color: brown;
 }
 

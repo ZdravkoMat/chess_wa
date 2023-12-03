@@ -48,6 +48,20 @@ function undoTo() {
 	});
 }
 
+function redoSteps() {
+	const redo_move = this.id
+	const current_move = $('.move.current').attr('id')
+	$.ajax({
+		method: 'GET',
+		url: `/game/play/redoSteps/${parseInt(redo_move) - current_move}`,
+
+		success: function (result) {
+			clearSelection()
+			updateBoard()
+		}
+	});
+}
+
 function redo() {
 	$.ajax({
 		method: 'GET',
@@ -72,14 +86,18 @@ function updateBoard() {
 			const squares = result.board.squares
 			for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
 			const moves = result.board.moves
-			for (const move in moves) $('#moves').append(`<div id="${parseInt(move)+1}" class="move">${moves[move]}</div>`)
+			const current_move = moves.length
+			for (const move in moves) $('#moves').append(`<div id="${parseInt(move)+1}" class="move ${(move == (current_move-1)) ? "current" : ""}">${moves[move]}</div>`)
+			const redo_moves = result.redo_moves
+			for (const move in redo_moves) $('#moves').append(`<div id="${current_move + parseInt(move) + 1}" class="redo_move">${redo_moves[move]}</div>`)
 			$(`.player_panel.${result.board.turn}`).addClass('turn')
 			$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
 			$('#winner').html(result.board.winner)
 			$('.player_panel.white > .capture_stack > .pieces').html(result.board.capture_stack.white)
 			$('.player_panel.black > .capture_stack > .pieces').html(result.board.capture_stack.black)
 			if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
-			$('.move').click(undoTo);
+			$('.move').click(undoTo)
+			$('.redo_move').click(redoSteps)
 		}
 	});
 }
@@ -91,7 +109,6 @@ function moveOptions(from) {
 		dataType: 'json',
 
 		success: function (move_options) {
-			// $(`#${from}`).addClass('selected')
 			$(`#${from}`).append('<div class="selected"></div>')
 			move_options.forEach(coord => $(`#${coord}`).append('<div class="move_option"></div>'))
 		}
@@ -99,8 +116,8 @@ function moveOptions(from) {
 }
 
 function shortcuts(e) {
-	if (e.which === 37) undo(); //left arrow key
-	else if (e.which === 39) redo(); //right arrow key
+	if (e.which === 37) undo() //left arrow key
+	else if (e.which === 39) redo() //right arrow key
 }
 
 // Function to toggle colors
