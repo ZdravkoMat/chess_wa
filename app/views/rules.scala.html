@@ -1,7 +1,115 @@
 @() 
 
 @main("Chess") { 
-    <div>
-        Test
+    <div class="row align-self-center">
+        <div class="col-1"></div>
+        <div class="col">
+            <div class="jumbotron">
+                <h1 class="display-4">Chess Rules</h1>
+                <hr class="my-4">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <p>The <b>King</b> may move one square in any direction, including diagonally.</p>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <img src="@routes.Assets.versioned("images/king_moves.jpg")" alt="moves" class="img_rules">
+                                </div>
+                                <div>
+                                    <span>The King may never move into check, meaning the King may never move into a square that is attacked by an enemy piece.</span><br>
+                                    <span>The King may never move into a square that is attacked by an enemy piece.</span><br>
+                                    <span>The King may never move into a square that is attacked by an enemy piece.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <p>The <b>Queen</b> may move any number of squares straight or diagonally in any direction.</p>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <img src="@routes.Assets.versioned("images/king_moves.jpg")" alt="moves" class="img_rules">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <p>The <b>Rook</b>  may move in a straight line, any number of squares horizontally or vertically.</p>
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <img src="@routes.Assets.versioned("images/rook_moves.jpg")" alt="moves" class="img_rules">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <p>The <b>Bishop</b> may move any number of squares diagonally.</p>
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <img src="@routes.Assets.versioned("images/bishop_moves.jpg")" alt="moves" class="img_rules">
+                                </div>
+                                <div>
+                                    <span>Each Bishop can only move on the same colour squares, as it started the game.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                <p>The <b>Knight</b> is the only piece that can jump over a piece - be it your own, or the opponent's.</p>
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <img src="@routes.Assets.versioned("images/knight_moves.jpg")" alt="moves" class="img_rules">
+                                </div>
+                                <div>
+                                    <span>The Knight can jump to any square in L shape. This is the only piece that can jump over a piece in its way.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                <p>The <b>Pawn</b> on its first move may move either one or two squares straight forward.</p>
+                            </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <img src="@routes.Assets.versioned("images/pawn_moves.jpg")" alt="moves" class="img_rules">
+                                </div>
+                                <div>
+                                    <span>After its first move the Pawn may only advance one square at a time. The Pawn captures by moving diagonally one square forward in each direction. The Pawn cannot move or capture backwards!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
     </div>
 }
