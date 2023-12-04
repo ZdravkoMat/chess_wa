@@ -24,11 +24,40 @@ import akka.actor._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) (implicit system: ActorSystem) extends BaseController {
-  val board = Board()
-  val controller = Controller(board)
+class HomeController @Inject()(val controllerComponents: ControllerComponents) (implicit system: ActorSystem, mat: Materializer) extends BaseController {
+  val controller = Controller(Board())
 
-  // controller.add(this)
+  object MyWebSocketActor {
+    def props(out: ActorRef) = {
+      Props(new MyWebSocketActor(out))
+    }
+  }
+
+  class MyWebSocketActor(out: ActorRef) extends Actor with Observer {
+    controller.add(this)
+    def receive = {
+      case msg: String =>
+        out ! ("[SERVER] I received your message: " + msg)
+        // println("Message received: " + msg)
+    }
+
+
+    override def update(e: Event): Unit = e match {
+      case Event.Move => sendJsonToClient
+      case _ => println("[SERVER] unknown event")
+    }
+
+    def sendJsonToClient = {
+      out ! (controller.boardJson().toString)
+    }
+  }
+
+  def socket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      MyWebSocketActor.props(out)
+    }
+  }
+
 
   def home = Action {
     Ok(views.html.home())
@@ -57,7 +86,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
   def move(from: String, to: String) = Action {
     controller.doAndPublish(controller.makeMove, Move(Coord.fromStr(from), Coord.fromStr(to)))
     Ok("Move done...")
-    // Redirect(routes.HomeController.game_play)
   }
 
   def undo() = Action {
@@ -86,29 +114,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
 
   def moveOptionsJson(from: String) = Action {
     Ok(controller.moveOptionsJson(Coord.fromStr(from)))
-  }
-
-  def socket = WebSocket.accept[String, String] { request =>
-    ActorFlow.actorRef { out =>
-      println("Connect received")
-      MyWebSocketActor.props(out)
-    }
-  }
-
-  object MyWebSocketActor {
-    def props(out: ActorRef) = {
-      println("Connect received")
-      Props(new MyWebSocketActor(out))
-    }
-  }
-
-  class MyWebSocketActor(out: ActorRef) extends Actor {
-    println("Class created")
-    def receive = {
-      case msg: String =>
-        out ! ("I received your message: " + msg)
-        println("Message received: " + msg)
-    }
   }
 
 }

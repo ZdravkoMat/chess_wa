@@ -13,16 +13,72 @@ $(document).ready(function() {
 	connectWebSocket()
 });
 
+function connectWebSocket() {
+	var websocket = new WebSocket("ws://localhost:9000/websocket");
+	websocket.setTimeout
+
+	websocket.onopen = function(e) {
+		console.log("Connection established!");
+	};
+
+	websocket.onclose = function(e) {
+		console.log("Connection closed!");
+	};
+
+	websocket.onerror = function(e) {
+		console.log("Error: " + e.data);
+	};
+
+	websocket.onmessage = function(e) {
+		if (typeof e.data === "string") {
+			console.log('String message received: ' + e.data);
+			updateGame(JSON.parse(e.data))
+    }
+		else {
+			console.log(e.data);
+		}
+	};
+}
+
 function move(from, to) {
+	clearSelection()
+	$.get(`/game/play/move/${from}/${to}`, function(data) {
+		console.log("[CLIENT] send move request");
+	});
+}
+
+function moveOptions(from) {
 	$.ajax({
 		method: 'GET',
-		url: `/game/play/move/${from}/${to}`,
+		url: `/moveOptionsJson/${from}`,
+		dataType: 'json',
 
-		success: function (result) {
-			clearSelection()
-			updateBoard()
+		success: function (move_options) {
+			$(`#${from}`).append('<div class="selected"></div>')
+			move_options.forEach(coord => $(`#${coord}`).append('<div class="move_option"></div>'))
 		}
 	});
+}
+
+function updateGame(result) {
+	$('.checked').removeClass('checked')
+	clearInfoPanel()
+	const squares = result.board.squares
+	for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
+	const moves = result.board.moves
+	const current_move = moves.length
+	for (const move in moves) $('#moves').append(`<div id="${parseInt(move)+1}" class="move ${(move == (current_move-1)) ? "current" : ""}">${moves[move]}</div>`)
+	const redo_moves = result.redo_moves
+	for (const move in redo_moves) $('#moves').append(`<div id="${current_move + parseInt(move) + 1}" class="redo_move">${redo_moves[move]}</div>`)
+	$(`.player_panel.${result.board.turn}`).addClass('turn')
+	$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
+	const winner = result.board.winner
+	$('#winner').html((winner != '') ? winner.charAt(0).toUpperCase() + winner.slice(1) + ' has won the game!' : '')
+	$('.player_panel.white > .capture_stack > .pieces').html(result.board.capture_stack.white)
+	$('.player_panel.black > .capture_stack > .pieces').html(result.board.capture_stack.black)
+	if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
+	$('.move').click(undoTo)
+	$('.redo_move').click(redoSteps)
 }
 
 function undo() {
@@ -104,50 +160,6 @@ function updateBoard() {
 			$('.redo_move').click(redoSteps)
 		}
 	});
-}
-
-function moveOptions(from) {
-	$.ajax({
-		method: 'GET',
-		url: `/moveOptionsJson/${from}`,
-		dataType: 'json',
-
-		success: function (move_options) {
-			$(`#${from}`).append('<div class="selected"></div>')
-			move_options.forEach(coord => $(`#${coord}`).append('<div class="move_option"></div>'))
-		}
-	});
-}
-
-function connectWebSocket() {
-	var websocket = new WebSocket("ws://localhost:9000/websocket");
-	websocket.setTimeout
-
-	websocket.onopen = function(event) {
-		console.log("Connection established!");
-		websocket.send("Trying to connect");
-		console.log("Message sent!");
-	};
-
-	websocket.onclose = function(event) {
-		console.log("Connection closed!");
-	};
-
-	websocket.onerror = function(event) {
-		console.log("Error: " + event.data);
-	};
-
-	websocket.onmessage = function(event) {
-		if (typeof e.data === "string") {
-            console.log('String message received: ' + e.data);
-        }
-        else if (e.data instanceof ArrayBuffer) {
-            console.log('ArrayBuffer received: ' + e.data);
-        }
-        else if (e.data instanceof Blob) {
-            console.log('Blob received: ' + e.data);
-        }
-	};
 }
 
 function shortcuts(e) {
