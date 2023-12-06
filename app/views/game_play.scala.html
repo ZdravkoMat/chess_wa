@@ -1,13 +1,4 @@
-@(
-squareData: List[(String, String, String)],
-whiteStack: List[String],
-blackStack: List[String],
-move_options: List[String],
-turn: String,
-advantage: Int,
-king_checked_coord: String,
-winner: String
-)
+@(squareData: List[(String, String)])
 
 @ranks= @{ List("a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8") }
 @files= @{ List("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1") }
@@ -17,9 +8,9 @@ winner: String
 	<div class="row" style="scale: 0.9;">
 
 		<div class="board col-8">
-			@for((squareCoord, squareStr, squareColor) <- squareData) {
-				<div id="@squareCoord" class="square @squareColor @(if (squareCoord == king_checked_coord) "king_checked_coord" else "")">
-					<span class="piece">@squareStr</span>
+			@for((squareCoord, squareColor) <- squareData) {
+				<div id="@squareCoord" class="square @squareColor">
+					<span class="piece"></span>
 					@if(ranks.contains(squareCoord)) {
 						<span class="coord rank">@squareCoord(1)</span>
 					}
@@ -33,16 +24,12 @@ winner: String
 		<div id="info_panel" class="col-4">
 			<div class="player_panel black">
 				<div class="capture_stack">
-					<span class="pieces">
-						@for(piece <- blackStack) {
-							@piece
-						}
-					</span>
+					<span class="pieces"></span>
 					<span class="advantage"></span>
 				</div>
 				<div class="name">PLAYER: Black</div>
 			</div>
-			<div id="moves"></div>
+			<div id="move_history"></div>
 			<div class="buttons">
 				<button id="undo" type="button">&#8678;</button>
 				<button id="redo" type="button">&#8680;</button>
@@ -52,11 +39,7 @@ winner: String
 			<div class="player_panel white turn">
 				<div class="name">PLAYER: White</div>
 				<div class="capture_stack">
-					<span class="pieces">
-						@for(piece <- whiteStack) {
-							@piece
-						}
-					</span>
+					<span class="pieces"></span>
 					<span class="advantage"></span>
 				</div>
 			</div>
@@ -65,4 +48,5 @@ winner: String
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
 }

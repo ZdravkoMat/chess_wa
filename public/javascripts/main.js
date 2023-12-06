@@ -31,7 +31,7 @@ function connectWebSocket() {
 
 	websocket.onmessage = function(e) {
 		if (typeof e.data === "string") {
-			console.log('String message received: ' + e.data);
+			// console.log('String message received: ' + e.data);
 			updateGame(JSON.parse(e.data))
     }
 		else {
@@ -65,11 +65,11 @@ function updateGame(result) {
 	clearInfoPanel()
 	const squares = result.board.squares
 	for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
-	const moves = result.board.moves
-	const current_move = moves.length
-	for (const move in moves) $('#moves').append(`<div id="${parseInt(move)+1}" class="move ${(move == (current_move-1)) ? "current" : ""}">${moves[move]}</div>`)
+	const move_history = result.board.moves
+	const current_move = move_history.length
+	for (const move in move_history) $('#move_history').append(`<div id="${parseInt(move)+1}" class="move ${(move == (current_move-1)) ? "current" : ""}">${move_history[move]}</div>`)
 	const redo_moves = result.redo_moves
-	for (const move in redo_moves) $('#moves').append(`<div id="${current_move + parseInt(move) + 1}" class="redo_move">${redo_moves[move]}</div>`)
+	for (const move in redo_moves) $('#move_history').append(`<div id="${current_move + parseInt(move) + 1}" class="redo_move">${redo_moves[move]}</div>`)
 	$(`.player_panel.${result.board.turn}`).addClass('turn')
 	$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
 	const winner = result.board.winner
@@ -140,25 +140,7 @@ function updateBoard() {
 		url: '/boardJson',
 		dataType: 'json',
 
-		success: function (result) {
-			clearInfoPanel()
-			const squares = result.board.squares
-			for (const square in squares) $(`#${square} .piece`).html(squares[square].piece)
-			const moves = result.board.moves
-			const current_move = moves.length
-			for (const move in moves) $('#moves').append(`<div id="${parseInt(move)+1}" class="move ${(move == (current_move-1)) ? "current" : ""}">${moves[move]}</div>`)
-			const redo_moves = result.redo_moves
-			for (const move in redo_moves) $('#moves').append(`<div id="${current_move + parseInt(move) + 1}" class="redo_move">${redo_moves[move]}</div>`)
-			$(`.player_panel.${result.board.turn}`).addClass('turn')
-			$(`.player_panel.${(result.board.advantage > 0) ? 'white' : 'black'} .advantage`).addClass('has_advantage').html((result.board.advantage != 0) ? `+${Math.abs(result.board.advantage)}` : '')
-			const winner = result.board.winner
-			$('#winner').html((winner != '') ? winner.charAt(0).toUpperCase() + winner.slice(1) + ' has won the game!' : '')
-			$('.player_panel.white > .capture_stack > .pieces').html(result.board.capture_stack.white)
-			$('.player_panel.black > .capture_stack > .pieces').html(result.board.capture_stack.black)
-			if(result.board.checked != '') $(`#${result.board.checked}`).addClass('checked')
-			$('.move').click(undoTo)
-			$('.redo_move').click(redoSteps)
-		}
+		success: updateGame
 	});
 }
 
@@ -189,7 +171,7 @@ function clearSelection() {
 function clearInfoPanel() {
 	$('.turn').removeClass('turn')
 	$('.has_advantage').html('').removeClass('has_advantage')
-	$('#moves').empty()
+	$('#move_history').empty()
 }
 
 function nextGameTheme() {

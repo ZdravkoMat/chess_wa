@@ -52,35 +52,29 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
     }
   }
 
-  def socket = WebSocket.accept[String, String] { request =>
+  def socket() = WebSocket.accept[String, String] { request =>
     ActorFlow.actorRef { out =>
       MyWebSocketActor.props(out)
     }
   }
 
 
-  def home = Action {
+  def home() = Action {
     Ok(views.html.home())
   }
 
-  def rules = Action {
+  def rules() = Action {
     Ok(views.html.rules())
   }
 
-  def game_play() = Action {
-    val squares = controller.squareDataStr()
-    val (white_stack, black_stack) = controller.captureStacks()
-    val move_options = List()
-    val turn = controller.turn().toString.toLowerCase
-    val advantage = controller.advantage()
-    val king_checked_coord = controller.kingCheckedCoord().getOrElse("").toString.toLowerCase
-    val winner = controller.winner().getOrElse("").toString.toLowerCase
-    Ok(views.html.game_play(squares, white_stack, black_stack, move_options, turn, advantage, king_checked_coord, winner))
+  def gameInit() = Action {
+    val squares = controller.squareInit()
+    Ok(views.html.game_play(squares))
   }
 
-  def newGame = Action {
+  def newGame() = Action {
     controller.doAndPublish(controller.newGame)
-    Redirect(routes.HomeController.game_play)
+    Redirect(routes.HomeController.gameInit())
   }
 
   def move(from: String, to: String) = Action {
@@ -108,7 +102,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
     Ok("RedoSteps done...")
   }
 
-  def boardJson = Action {
+  def boardJson() = Action {
     Ok(controller.boardJson())
   }
 

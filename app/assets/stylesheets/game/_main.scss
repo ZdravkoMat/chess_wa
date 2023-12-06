@@ -32,7 +32,7 @@
 			#info_panel {
 				color: $color_text;
 				background-color: $color_info_panel;
-				#moves {
+				#move_history {
 					.move, .redo_move {
 						&:hover {
 							background-color: $color_square_black;
