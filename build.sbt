@@ -11,6 +11,7 @@ scalacOptions ++= Seq("-Ytasty-reader")
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test
 libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.9.0"
+libraryDependencies += filters
 
 
 

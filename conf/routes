@@ -15,6 +15,8 @@ GET     /game/play/undoTo/:n            controllers.HomeController.undoTo(n)
 GET     /game/play/redo             		controllers.HomeController.redo()
 GET     /game/play/redoSteps/:i         controllers.HomeController.redoSteps(i)
 
+GET			/initBoardJson									controllers.HomeController.initBoardJson()
+GET			/squaresJson									controllers.HomeController.squaresJson()
 GET     /boardJson                          controllers.HomeController.boardJson()
 GET     /moveOptionsJson/:from              controllers.HomeController.moveOptionsJson(from)
 

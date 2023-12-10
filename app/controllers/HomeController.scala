@@ -102,6 +102,14 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
     Ok("RedoSteps done...")
   }
 
+  def initBoardJson() = Action {
+    Ok(controller.initBoardJson())
+  }
+
+  def squaresJson() = Action {
+    Ok(controller.squaresJson())
+  }
+
   def boardJson() = Action {
     Ok(controller.boardJson())
   }
