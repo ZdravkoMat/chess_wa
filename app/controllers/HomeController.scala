@@ -110,6 +110,14 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
     Ok(controller.squaresJson())
   }
 
+  def checkedCoordJson() = Action {
+    Ok(controller.checkedCoordJson())
+  }
+
+  def gameInfoJson() = Action {
+    Ok(controller.gameInfoJson())
+  }
+
   def boardJson() = Action {
     Ok(controller.boardJson())
   }

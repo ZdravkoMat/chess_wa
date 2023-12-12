@@ -17,6 +17,8 @@ GET     /game/play/redoSteps/:i         controllers.HomeController.redoSteps(i)
 
 GET			/initBoardJson									controllers.HomeController.initBoardJson()
 GET			/squaresJson									controllers.HomeController.squaresJson()
+GET			/checkedCoordJson									controllers.HomeController.checkedCoordJson()
+GET			/gameInfoJson									controllers.HomeController.gameInfoJson()
 GET     /boardJson                          controllers.HomeController.boardJson()
 GET     /moveOptionsJson/:from              controllers.HomeController.moveOptionsJson(from)
 
