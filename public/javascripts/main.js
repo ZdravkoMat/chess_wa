@@ -10,7 +10,7 @@ $(document).ready(function() {
 	$('#colorChangeBtn').click(nextGameTheme);
 	$(document).keydown(shortcuts);
 	updateBoard();
-	connectWebSocket()
+	// connectWebSocket()
 });
 
 function connectWebSocket() {

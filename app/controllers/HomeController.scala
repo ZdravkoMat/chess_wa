@@ -38,18 +38,23 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) (
     def receive = {
       case msg: String =>
         out ! ("[SERVER] I received your message: " + msg)
-        // println("Message received: " + msg)
     }
 
 
     override def update(e: Event): Unit = e match {
-      case Event.Move => sendJsonToClient
+      case Event.Move => {
+        sendSquares
+        sendGameInfo
+      }
       case _ => println("[SERVER] unknown event")
     }
 
     def sendJsonToClient = {
       out ! (controller.boardJson().toString)
     }
+
+    def sendSquares = out ! (controller.squaresJson().toString)
+    def sendGameInfo = out ! (controller.gameInfoJson().toString)
   }
 
   def socket() = WebSocket.accept[String, String] { request =>
